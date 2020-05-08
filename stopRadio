@@ -1,6 +1,6 @@
 #!/bin/bash
 
-name=''
+name='what-your-droplet-is-called'
 
 # Find a droplet id that matches our name
 droplet_id=$(doctl compute droplet list $name* --format "ID" --no-header)
