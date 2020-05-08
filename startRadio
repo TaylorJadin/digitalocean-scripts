@@ -1,0 +1,35 @@
+#!/bin/bash
+
+### config ###
+name='azuracast-jadin-me'
+floating_ip='157.230.65.247'
+
+# find a snapshot to restore from
+sName="$name-snapshot"
+image_id=$(doctl compute image list $sName* --format "ID" | tail -n 1)
+
+# Let's make sure when we spin up a droplet we have a unique name
+now=$(date +%s)
+uName="$name-$now"
+
+# Make sure a droplet isn't already spun up
+droplet_id=$(doctl compute droplet list $name* --format "ID" --no-header)
+if [ -z "$droplet_id" ];
+    then
+        echo "Spinning up a new droplet called: $uName"
+    else
+        echo "Uh oh, there is already at least one droplet that matches that name. Exiting..."
+        exit
+fi
+
+# Spin up the droplet
+doctl compute droplet create $uName --size s-1vcpu-2gb --image $image_id --region nyc1 --enable-backups --wait
+
+# Find the droplet id
+droplet_id=$(doctl compute droplet list $name* --format "ID" --no-header)
+
+# Assign the floating ip to the new droplet
+doctl compute floating-ip-action assign $floating_ip $droplet_id
+
+# Change the webpage to show that we are online
+cp /home/jadinme/radio.jadin.me/online.html /home/jadinme/radio.jadin.me/index.html
