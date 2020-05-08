@@ -5,7 +5,7 @@ name='what-your-droplet-is-called'
 # Find a droplet id that matches our name
 droplet_id=$(doctl compute droplet list $name* --format "ID" --no-header)
 
-#Let's make sure the snapshot has a unique name
+# Let's make sure the snapshot has a unique name
 now=$(date +%s)
 sName="$name-snapshot-$now"
 
