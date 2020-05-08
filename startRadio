@@ -8,7 +8,7 @@ floating_ip='111.111.111.111'
 sName="$name-snapshot"
 image_id=$(doctl compute image list $sName* --format "ID" | tail -n 1)
 
-# Let's make sure when we spin up a droplet we have a unique name
+# Let's make sure when we spin up a droplet it has a unique name
 now=$(date +%s)
 uName="$name-$now"
 
