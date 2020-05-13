@@ -1,6 +1,6 @@
 #!/bin/bash
 
-name='azuracast-jadin-me'
+name='name-of-droplet'
 
 # Find a droplet id that matches our name
 droplet_id=$(doctl compute droplet list $name* --format "ID" --no-header)
