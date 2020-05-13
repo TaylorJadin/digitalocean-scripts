@@ -23,4 +23,5 @@ doctl compute droplet-action snapshot $droplet_id --snapshot-name $sName --wait
 
 # Delete the droplet
 echo ""
+echo "Deleting droplet $droplet_id"
 doctl compute droplet delete $droplet_id -f
