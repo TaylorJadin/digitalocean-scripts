@@ -1,20 +1,26 @@
 #!/bin/bash
 
-name='what-your-droplet-is-called'
+name='azuracast-jadin-me'
 
 # Find a droplet id that matches our name
 droplet_id=$(doctl compute droplet list $name* --format "ID" --no-header)
 
-# Let's make sure the snapshot has a unique name
-now=$(date +%s)
+#Let's make sure the snapshot has a unique name
+now=$(date +%Y%m%d_%H%M%S)
 sName="$name-snapshot-$now"
 
 # Change the webpage to show that we are offline
+echo "Copying offline.html over the top of index.html"
 cp /home/jadinme/radio.jadin.me/offline.html /home/jadinme/radio.jadin.me/index.html
 
 # shutdown droplet and take a snapshot
+echo ""
+echo "Shutting down droplet $droplet_id"
 doctl compute droplet-action shutdown $droplet_id --wait
+echo ""
+echo "Taking snapshot of droplet $droplet_id"
 doctl compute droplet-action snapshot $droplet_id --snapshot-name $sName --wait
 
 # Delete the droplet
+echo ""
 doctl compute droplet delete $droplet_id -f
