@@ -1,8 +1,8 @@
 #!/bin/bash
 
 ### config ###
-name='azuracast-jadin-me'
-floating_ip='157.230.65.247'
+name='name-of-droplet'
+floating_ip='111.111.111.111'
 
 # Make sure a droplet isn't already spun up
 droplet_id=$(doctl compute droplet list $name* --format "ID" --no-header)
