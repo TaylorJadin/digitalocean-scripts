@@ -1,13 +1,13 @@
 #!/bin/bash
 
 ### config ###
-name='name-of-droplet'
-floating_ip='111.111.111.111'
-image_id_path='/path/to/image_id'
+name='azuracast-jadin-me'
+floating_ip='157.230.65.247'
+image_id_path='/home/jadinme/radio.jadin.me/image_id'
 
-if [[ ! -f <file> ]]
+if [[ ! -f $image_id_path ]]
 then
-    echo "<file> does not exist. Please write an id for the snapshot you would like to restore from there"
+    echo "$image_id_path does not exist. Please write an id for the snapshot you would like to restore from there"
 fi
 
 # Make sure a droplet isn't already spun up
@@ -27,12 +27,6 @@ echo "Restoring from $image_id"
 
 # Let's make sure when we spin up a droplet we have a unique name
 now=$(date +%F-%H%M%S)
-sName="$name-snapshot"
-image_id=$(doctl compute image list $sName* --format "ID" | tail -n 1)
-echo "Restoring from $image_id"
-
-# Let's make sure when we spin up a droplet we have a unique name
-now=$(date +%Y%m%d_%H%M%S)
 uName="$name-$image_id-$now"
 
 # Spin up the droplet

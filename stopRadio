@@ -1,7 +1,8 @@
 #!/bin/bash
 
-name='what-your-droplet-is-called'
-image_id_path='/path/to/image_id'
+### config ###
+name='azuracast-jadin-me'
+image_id_path='/home/jadinme/radio.jadin.me/image_id'
 
 # Find a droplet id that matches our name
 droplet_id=$(doctl compute droplet list $name* --format "ID" --no-header)
