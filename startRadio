@@ -36,11 +36,8 @@ echo ""
 doctl compute droplet create $dropletName --size s-1vcpu-2gb --image $image_id --region nyc1 --enable-backups --wait
 echo ""
 
-# Find the droplet id
-droplet_id=$(doctl compute droplet list $name* --format "ID" --no-header)
-
 # write id of the droplet to disk so we can find it later
-droplet_id=$(doctl compute image list --format "ID" | tail -n 1)
+droplet_id=$(doctl compute droplet list $name* --format "ID" --no-header)
 echo $droplet_id > $droplet_id_path
 
 # Assign the floating ip to the new droplet
