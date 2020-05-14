@@ -4,6 +4,7 @@
 name='azuracast-jadin-me'
 floating_ip='157.230.65.247'
 image_id_path='/home/jadinme/radio.jadin.me/image_id'
+droplet_id_path='/home/jadinme/radio.jadin.me/droplet_id'
 
 if [[ ! -f $image_id_path ]]
 then
@@ -27,16 +28,20 @@ echo "Restoring from $image_id"
 
 # Let's make sure when we spin up a droplet we have a unique name
 now=$(date +%F-%H%M%S)
-uName="$name-$image_id-$now"
+dropletName="$name-$image_id-$now"
 
 # Spin up the droplet
-echo "Creating droplet: $uName"
+echo "Creating droplet: $dropletName"
 echo ""
-doctl compute droplet create $uName --size s-1vcpu-2gb --image $image_id --region nyc1 --enable-backups --wait
+doctl compute droplet create $dropletName --size s-1vcpu-2gb --image $image_id --region nyc1 --enable-backups --wait
 echo ""
 
 # Find the droplet id
 droplet_id=$(doctl compute droplet list $name* --format "ID" --no-header)
+
+# write id of the droplet to disk so we can find it later
+droplet_id=$(doctl compute image list --format "ID" | tail -n 1)
+echo $droplet_id > $droplet_id_path
 
 # Assign the floating ip to the new droplet
 doctl compute floating-ip-action assign $floating_ip $droplet_id
