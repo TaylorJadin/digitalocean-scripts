@@ -31,7 +31,7 @@ echo "Taking snapshot of droplet $droplet_id"
 doctl compute droplet-action snapshot $droplet_id --snapshot-name $snapshotName --wait
 
 # write id of the most recent image to disk so we can call it later
-image_id=$(doctl compute image list --format "ID" | tail -n 1)
+image_id=$(doctl compute droplet snapshots $droplet_id --format "ID" | tail -n 1)
 echo $image_id > $image_id_path
 
 # Delete the droplet
