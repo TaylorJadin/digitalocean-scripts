@@ -6,11 +6,6 @@ floating_ip='157.230.65.247'
 image_id_path='/home/jadinme/radio.jadin.me/image_id'
 droplet_id_path='/home/jadinme/radio.jadin.me/droplet_id'
 
-if [[ ! -f $image_id_path ]]
-then
-    echo "$image_id_path does not exist. Please write an id for the snapshot you would like to restore from there"
-fi
-
 # Make sure a droplet isn't already spun up
 droplet_id=$(doctl compute droplet list $name* --format "ID" --no-header)
 if [ -z "$droplet_id" ];
@@ -22,9 +17,15 @@ if [ -z "$droplet_id" ];
 fi
 
 # find a snapshot to restore from
-echo "Looking for a snapshot to restore from"
-image_id=$(cat $image_id_path)
-echo "Restoring from $image_id"
+if [ -z "$image_id_path" ];
+    then
+        echo "Looking for a snapshot to restore from"
+        image_id=$(cat $image_id_path)
+        echo "Restoring from $image_id"
+    else
+        echo "$image_id_path does not exist. Please write an id for the snapshot you would like to restore from there"
+        exit
+fi
 
 # Let's make sure when we spin up a droplet we have a unique name
 now=$(date +%F-%H%M%S)
