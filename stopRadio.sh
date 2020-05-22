@@ -5,14 +5,14 @@ name='azuracast-jadin-me'
 image_id_path='/home/jadinme/radio.jadin.me/image_id'
 droplet_id_path='/home/jadinme/radio.jadin.me/droplet_id'
 
-if [[ ! -f $droplet_id_path ]]
+if [ -f $droplet_id_path ];
 then
+    echo "Looking for a drpolet id"
+    droplet_id=$(cat $droplet_id_path)    
+else
     echo "$droplet_id_path does not exist. Please write an id for the droplet you would like to backup and destroy"
+    exit
 fi
-
-# find a snapshot to restore from
-echo "Looking for a drpolet id"
-droplet_id=$(cat $droplet_id_path)
 
 #Let's make sure the snapshot has a unique name
 now=$(date +%Y%m%d_%H%M%S)

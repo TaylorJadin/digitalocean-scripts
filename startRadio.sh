@@ -17,7 +17,7 @@ if [ -z "$droplet_id" ];
 fi
 
 # find a snapshot to restore from
-if [ -z "$image_id_path" ];
+if [ -f "$image_id_path" ];
     then
         echo "Looking for a snapshot to restore from"
         image_id=$(cat $image_id_path)
