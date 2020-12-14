@@ -1,7 +1,6 @@
 #!/bin/bash
 
-
-#THIS IS A TEST!!!!
+# Another message!
 
 ### config ###
 name='azuracast-jadin-me'
