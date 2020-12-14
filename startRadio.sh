@@ -1,5 +1,8 @@
 #!/bin/bash
 
+
+#THIS IS A TEST!!!!
+
 ### config ###
 name='azuracast-jadin-me'
 floating_ip='157.230.65.247'
